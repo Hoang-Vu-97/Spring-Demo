@@ -14,5 +14,5 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 			"join grade_student on (Student.id=grade_student.student_id)\n" + 
 			"join Grade on (Grade.id=grade_student.grade_id)\n" + 
 			"where Student.id=:id",  nativeQuery = true)
-	List<String> getGradeNamesByStudentId(@Param("id") int id);
+	List<String> getGradesByStudentId(@Param("id") int id);
 }

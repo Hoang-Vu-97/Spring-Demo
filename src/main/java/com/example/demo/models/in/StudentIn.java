@@ -1,10 +1,10 @@
 package com.example.demo.models.in;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class StudentCreate {
+public class StudentIn {
 	private String name;
-	private Date birthday;
+	private LocalDate birthday;
     private String address;
     private String phoneNumber;
     
@@ -14,10 +14,10 @@ public class StudentCreate {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getBirthday() {
+	public LocalDate getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
 	public String getAddress() {

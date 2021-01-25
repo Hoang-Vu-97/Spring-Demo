@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.entities.Student;
-import com.example.demo.models.in.StudentCreate;
+import com.example.demo.models.in.StudentIn;
 import com.example.demo.repositories.StudentRepository;
 
 @Service
@@ -14,10 +14,6 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public void save(Student student) {
-    	studentRepository.save(student);
-    }
-    
     public Student findById(int id) {
     	return studentRepository.findById(id).orElse(null);
     }
@@ -25,17 +21,28 @@ public class StudentService {
     public List<Student> findAll() {
         return studentRepository.findAll();
     }
-
-    public Student add(StudentCreate studentCreate) {
+    
+    public Student add(StudentIn studentIn) {
     	Student student = new Student();
     	
-    	student.setName(studentCreate.getName());
-    	student.setBirthday(studentCreate.getBirthday());
-    	student.setAddress(studentCreate.getAddress());
-    	student.setPhoneNumber(studentCreate.getPhoneNumber());
+    	student.setName(studentIn.getName());
+    	student.setBirthday(studentIn.getBirthday());
+    	student.setAddress(studentIn.getAddress());
+    	student.setPhoneNumber(studentIn.getPhoneNumber());    
     	studentRepository.save(student);
     	
     	return student;
+    }
+    
+    public Student update(int id, StudentIn studentUpdate) {
+        Student student = studentRepository.findById(id).orElse(null);
+    	
+    	student.setName(studentUpdate.getName());
+    	student.setBirthday(studentUpdate.getBirthday());
+    	student.setAddress(studentUpdate.getAddress());
+    	student.setPhoneNumber(studentUpdate.getPhoneNumber());
+    	
+    	return studentRepository.save(student);  
     }
     
     public String delete(int id) {
@@ -46,9 +53,8 @@ public class StudentService {
     	return "Success !";
     }
     
-    // Get grade name by student id
-    public List<String> getGradeNamesByStudentId(int id) {
-    	return studentRepository.getGradeNamesByStudentId(id);
+    public List<String> getGradesByStudentId(int id) {
+    	return studentRepository.getGradesByStudentId(id);
     }
     
 }

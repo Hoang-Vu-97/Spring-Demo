@@ -7,18 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.models.entities.Grade;
 import com.example.demo.models.entities.Student;
-import com.example.demo.models.in.GradeCreate;
+import com.example.demo.models.in.GradeIn;
 import com.example.demo.repositories.GradeRepository;
 
 @Service
 public class GradeService {
     @Autowired
     private GradeRepository gradeRepository;
-    
-    public void save(Grade grade) {
-    	gradeRepository.save(grade);
-    }
-    
+      
     public Grade findById(int id) {
     	return gradeRepository.findById(id).orElse(null);
     }
@@ -27,13 +23,22 @@ public class GradeService {
         return gradeRepository.findAll();
     }
 
-    public Grade add(GradeCreate gradeCreate) {
+    public Grade add(GradeIn gradeIn) {
         Grade grade = new Grade();
 
-        grade.setName(gradeCreate.getName());
+        grade.setName(gradeIn.getName());
         gradeRepository.save(grade);
 
         return grade;
+    }
+    
+    public Grade update(int id, GradeIn gradeUpdate) {
+    	Grade grade = gradeRepository.findById(id).orElse(null);
+    	
+    	grade.setName(gradeUpdate.getName());
+    	grade.setStudent(gradeUpdate.getStudent());
+    	
+    	return gradeRepository.save(grade);
     }
     
     public String delete(int id) {
@@ -46,8 +51,9 @@ public class GradeService {
         return "Success !";
     }
     
-    public List<Student> getStudentNamesByGradeId(int id) {
-    	return gradeRepository.getStudentNamesByGradeId(id);
+    public List<Student> getStudentsByGradeId(int id) {
+    	return gradeRepository.getStudentsByGradeId(id);
     }
+    
     
 }

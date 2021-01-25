@@ -1,9 +1,22 @@
 package com.example.demo.models.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.SqlResultSetMapping;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -13,7 +26,7 @@ classes = @ConstructorResult(
         columns = {
                 @ColumnResult(name = "id", type = Integer.class),
                 @ColumnResult(name = "name", type = String.class),
-                @ColumnResult(name = "birthday", type = Date.class),
+                @ColumnResult(name = "birthday", type = LocalDate.class),
                 @ColumnResult(name = "address", type = String.class),
                 @ColumnResult(name = "phone_number", type = String.class),
         }
@@ -30,7 +43,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Date birthday;
+    private LocalDate birthday;
     private String address;
     private String phoneNumber;
 
@@ -45,7 +58,7 @@ public class Student {
     public Student() {
 	}
 
-	public Student(Integer id, String name, Date birthday, String address, String phoneNumber) {
+	public Student(Integer id, String name, LocalDate birthday, String address, String phoneNumber) {
 		this.id = id;
 		this.name = name;
 		this.birthday = birthday;
@@ -69,11 +82,11 @@ public class Student {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

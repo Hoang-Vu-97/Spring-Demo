@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.example.demo.models.entities.Student;
 
-public class GradeCreate {
+public class GradeIn {
     private String name;
     private List<Student> student;
     
-    public String getName() {
+	public String getName() {
         return name;
     }
 

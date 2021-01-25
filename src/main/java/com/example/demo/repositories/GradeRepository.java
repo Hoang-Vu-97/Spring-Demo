@@ -13,5 +13,5 @@ import com.example.demo.models.entities.Student;
 @Repository
 public interface GradeRepository extends JpaRepository<Grade, Integer> {
 	@Query(name = "showStudents",  nativeQuery = true)
-	List<Student> getStudentNamesByGradeId(@Param("id") int id);
+	List<Student> getStudentsByGradeId(@Param("id") int id);
 }

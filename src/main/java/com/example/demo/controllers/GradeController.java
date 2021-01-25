@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.entities.Grade;
 import com.example.demo.models.entities.Student;
-import com.example.demo.models.in.GradeCreate;
-import com.example.demo.repositories.GradeRepository;
+import com.example.demo.models.in.GradeIn;
 import com.example.demo.services.GradeService;
 
 @RestController
@@ -22,37 +21,34 @@ public class GradeController {
     @Autowired
     private GradeService gradeService;
     
-    @Autowired
-    private GradeRepository gradeRepository;
-    
-    @GetMapping("/grade")
+    @GetMapping("/grades")
     public List<Grade> findAll() {
         return gradeService.findAll();
     }
 
-    @PostMapping("/grade/add")
-    public Grade add(@RequestBody GradeCreate gradeCreate) {
-        return gradeService.add(gradeCreate);
-    }
-
-    @PutMapping("/grade/update/{id}")
-    public Grade update(@PathVariable("id") int id, @RequestBody GradeCreate gradeCreate) {
-    	Grade grade = gradeService.findById(id);
-    	grade.setName(gradeCreate.getName());
-    	grade.setStudent(gradeCreate.getStudent());
-    	gradeService.save(grade);
-    	return grade;
+    @GetMapping("/grades/{id}")
+    public Grade findById(@PathVariable("id") int id) {
+    	return gradeService.findById(id);
     }
     
-    @DeleteMapping("/grade/delete/{id}")
+    @PostMapping("/grades")
+    public Grade add(@RequestBody GradeIn gradeIn) {
+        return gradeService.add(gradeIn);
+    }
+
+    @PutMapping("/grades/{id}")
+    public Grade update(@PathVariable("id") int id, @RequestBody GradeIn gradeUpdate) {
+    	return gradeService.update(id, gradeUpdate);
+    }
+    
+    @DeleteMapping("/grades/{id}")
     public String delete(@PathVariable("id") int id) {
     	return gradeService.delete(id);
     }
     
-    // Try
-    @GetMapping("/grade/student/{id}")
-    public List<Student> getStudentNamesByGradeId(@PathVariable("id") int id) {
-        return gradeRepository.getStudentNamesByGradeId(id);
+    @GetMapping("/grades/{id}/students")
+    public List<Student> getStudentsByGradeId(@PathVariable("id") int id) {
+        return gradeService.getStudentsByGradeId(id);
     }
     
 }

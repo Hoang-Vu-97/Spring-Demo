@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.entities.Student;
-import com.example.demo.models.in.StudentCreate;
+import com.example.demo.models.in.StudentIn;
 import com.example.demo.services.StudentService;
 
 @RestController
@@ -20,38 +20,34 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping("/student")
+    @GetMapping("/students")
     public List<Student> findAll() {
         return studentService.findAll();
     }
 
-    @PostMapping("/student/add")
-    public Student add(@RequestBody StudentCreate studentCreate) {
-    	return studentService.add(studentCreate);
+    @GetMapping("/students/{id}")
+    public Student findById(@PathVariable("id") int id) {
+    	return studentService.findById(id);
     }
     
-    @PutMapping("/student/update/{id}")
-    public Student update(@PathVariable("id") int id, @RequestBody StudentCreate studentCreate) {
-    	Student student = studentService.findById(id);
-    	
-    	student.setName(studentCreate.getName());
-    	student.setBirthday(studentCreate.getBirthday());
-    	student.setAddress(studentCreate.getAddress());
-    	student.setPhoneNumber(studentCreate.getPhoneNumber());
-    	
-    	studentService.save(student);
-    	return student;
+    @PostMapping("/students")  
+    public Student add(@RequestBody StudentIn studentIn) {
+    	return studentService.add(studentIn);
     }
     
-    @DeleteMapping("/student/delete/{id}")
+    @PutMapping("/students/{id}")
+    public Student update(@PathVariable("id") int id, @RequestBody StudentIn studentUpdate) {
+    	return studentService.update(id, studentUpdate);
+    }
+    
+    @DeleteMapping("/students/{id}")
     public String delete(@PathVariable("id") int id) {
     	return studentService.delete(id);
     }
     
-    // Tra ve ten cac lop hoc cua mot hoc sinh
-    @GetMapping("/student/grade/{id}")
-    public List<String> getGradeNamesByStudentId(@PathVariable("id") int id) {
-    	return studentService.getGradeNamesByStudentId(id);
+    @GetMapping("/students/{id}/grades")
+    public List<String> getGradesByStudentId(@PathVariable("id") int id) {
+    	return studentService.getGradesByStudentId(id);
     }
     
 }
